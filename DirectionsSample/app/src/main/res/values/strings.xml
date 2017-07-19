@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DirectionsSample</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="collapsing_toolbar">Different Route...?</string>
+    <string name="enter_source">Search for Places.</string>
+    <string name="locationOk">OK !!</string>
+    <string name="askDestination">To....</string>
+    <string name="askSource">From ...</string>
+</resources>
