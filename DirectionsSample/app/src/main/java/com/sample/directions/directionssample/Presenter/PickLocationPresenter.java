@@ -4,19 +4,14 @@ import android.location.Address;
 import android.location.Location;
 import android.util.Log;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.patloew.rxlocation.RxLocation;
 import com.sample.directions.directionssample.Model.LocationInfo;
 
-import java.util.List;
-
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.SafeObserver;
 import io.reactivex.schedulers.Schedulers;
 /**
  * Created by macosx on 19/07/2017 AD.
@@ -91,8 +86,7 @@ public class PickLocationPresenter implements BasePresenter {
     }
 
 
-    public void getAddress(Location location){
-        setSourceAndDestinationAddress(location);
+    public void getAddress(final Location location){
         rxLocation.geocoding().fromLocation(location).toObservable()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -108,12 +102,13 @@ public class PickLocationPresenter implements BasePresenter {
                     StringBuffer addressText = new StringBuffer();
                     final int maxAddressLineIndex = address.getMaxAddressLineIndex();
 
-                    for(int i=0; i<=Math.min(2,maxAddressLineIndex); i++) {
+                    for(int i=0; i<=maxAddressLineIndex; i++) {
                         addressText.append(address.getAddressLine(i));
                         if(i != maxAddressLineIndex) { addressText.append("\n"); }
                     }
-                    pickLocationView.setAddress(addressText.toString());
+                    pickLocationView.updateAddress(addressText.toString());
                     Log.d("Address",addressText.toString());
+                    setSourceAndDestinationAddress(location,addressText.toString());
                 }
 
                 @Override
@@ -128,11 +123,11 @@ public class PickLocationPresenter implements BasePresenter {
             });
     }
 
-    private void setSourceAndDestinationAddress(Location location) {
+    private void setSourceAndDestinationAddress(Location location, String s) {
         if(confirmedSource)
-            destination = new LocationInfo(location);
+            destination = new LocationInfo(location,s);
         else
-            source = new LocationInfo(location);
+            source = new LocationInfo(location,s);
     }
 
     public String getTitle() {

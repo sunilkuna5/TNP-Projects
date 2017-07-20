@@ -11,5 +11,5 @@ public interface PickLocationView extends BaseView {
     void askForDestination();
     void askForSource();
     void startRouteActivity();
-    void setAddress(String s);
+    void updateAddress(String s);
 }

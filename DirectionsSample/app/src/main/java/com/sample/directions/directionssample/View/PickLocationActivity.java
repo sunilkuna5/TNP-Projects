@@ -2,6 +2,7 @@ package com.sample.directions.directionssample.View;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,11 +47,11 @@ public class PickLocationActivity extends AppCompatActivity implements PickLocat
     @BindView(R.id.searchButton)
     Button searchButton;
 
-    @BindView(R.id.locationOk)
-    Button locationOk;
-
     @BindView(R.id.searchBox)
     EditText searchBox;
+
+    @BindView(R.id.address)
+    TextView address;
 
     PickLocationPresenter presenter;
 
@@ -63,7 +64,7 @@ public class PickLocationActivity extends AppCompatActivity implements PickLocat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_location);
         rxLocation = new RxLocation(this);
-        rxLocation.setDefaultTimeout(15, TimeUnit.SECONDS);
+        rxLocation.setDefaultTimeout(15000, TimeUnit.MILLISECONDS);
 
         presenter = PickLocationPresenter.getInstance(this,rxLocation);
         ButterKnife.bind(this);
@@ -83,7 +84,9 @@ public class PickLocationActivity extends AppCompatActivity implements PickLocat
                 // create new textView and set the properties like clolr, size etc
                 TextView myText = new TextView(PickLocationActivity.this);
                 myText.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-                myText.setTextSize(18);
+                myText.setTextSize(24);
+                myText.setBackgroundColor(Color.GRAY);
+                myText.setTypeface(null, Typeface.BOLD_ITALIC);
                 myText.setTextColor(Color.BLUE);
                 return myText;
             }
@@ -140,9 +143,8 @@ public class PickLocationActivity extends AppCompatActivity implements PickLocat
     }
 
     @Override
-    public void setAddress(String s) {
-        googleMap.clear();
-        marker = googleMap.addMarker(new MarkerOptions().title("Loading").position(googleMap.getCameraPosition().target));
+    public void updateAddress(String s) {
+        address.setText(s);
     }
 
     @Override
@@ -169,14 +171,7 @@ public class PickLocationActivity extends AppCompatActivity implements PickLocat
             @Override
             public void onCameraMove() {
                 marker.setPosition(googleMap.getCameraPosition().target);
-            }
-        });
-
-        googleMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() {
-            @Override
-            public void onCameraMoveStarted(int i) {
-                googleMap.clear();
-                marker = googleMap.addMarker(new MarkerOptions().title("Loading").position(googleMap.getCameraPosition().target));
+                address.setText(getString(R.string.loading));
             }
         });
 

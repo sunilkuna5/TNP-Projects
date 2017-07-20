@@ -9,10 +9,11 @@ import android.location.Location;
 public class LocationInfo {
 
     Location location;
-    String Address;
+    String address;
 
-    public LocationInfo(Location location) {
+    public LocationInfo(Location location, String s) {
         this.location = location;
+        this.address = s;
     }
 
     public Location getLocation() {
@@ -24,10 +25,10 @@ public class LocationInfo {
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 }

@@ -6,4 +6,5 @@
     <string name="locationOk">OK !!</string>
     <string name="askDestination">To....</string>
     <string name="askSource">From ...</string>
+    <string name="loading">Loading...</string>
 </resources>
