@@ -1,4 +1,4 @@
-package com.sample.directions.directionssample.Presenter;
+package com.sample.directions.directionssample.Presenter.ViewControllers;
 
 import android.content.Context;
 
@@ -10,6 +10,4 @@ public interface BaseView {
 
     void showProgress();
     void hideProgress();
-
-    Context getContext();
 }

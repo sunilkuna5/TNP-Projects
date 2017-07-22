@@ -75,4 +75,12 @@ public class RoutesModel implements Parcelable
         return  0;
     }
 
+    @Override
+    public String toString() {
+        return "RoutesModel{" +
+                "geocodedWaypoints=" + geocodedWaypoints +
+                ", routes=" + routes +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

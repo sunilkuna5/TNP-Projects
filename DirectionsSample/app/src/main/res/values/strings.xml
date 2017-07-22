@@ -7,4 +7,9 @@
     <string name="askDestination">To....</string>
     <string name="askSource">From ...</string>
     <string name="loading">Loading...</string>
+    <string name="locationInfo">LOCATION_INFO</string>
+    <string name="pickFromGoogle">Google Places</string>
+    <string name="source">Source</string>
+    <string name="destination">Destination</string>
+    <string name="changeRoutes">Change Routes</string>
 </resources>

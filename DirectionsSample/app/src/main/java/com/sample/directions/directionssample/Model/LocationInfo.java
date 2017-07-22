@@ -1,12 +1,14 @@
 package com.sample.directions.directionssample.Model;
 
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by macosx on 19/07/2017 AD.
  */
 
-public class LocationInfo {
+public class LocationInfo implements Parcelable{
 
     Location location;
     String address;
@@ -15,6 +17,23 @@ public class LocationInfo {
         this.location = location;
         this.address = s;
     }
+
+    protected LocationInfo(Parcel in) {
+        location = in.readParcelable(Location.class.getClassLoader());
+        address = in.readString();
+    }
+
+    public static final Creator<LocationInfo> CREATOR = new Creator<LocationInfo>() {
+        @Override
+        public LocationInfo createFromParcel(Parcel in) {
+            return new LocationInfo(in);
+        }
+
+        @Override
+        public LocationInfo[] newArray(int size) {
+            return new LocationInfo[size];
+        }
+    };
 
     public Location getLocation() {
         return location;
@@ -30,5 +49,16 @@ public class LocationInfo {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeParcelable(location, i);
+        parcel.writeString(address);
     }
 }

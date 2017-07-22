@@ -1,6 +1,4 @@
-package com.sample.directions.directionssample.Presenter;
-
-import android.location.Address;
+package com.sample.directions.directionssample.Presenter.ViewControllers;
 
 /**
  * Created by macosx on 19/07/2017 AD.

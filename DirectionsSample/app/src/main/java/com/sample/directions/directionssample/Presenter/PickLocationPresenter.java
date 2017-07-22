@@ -4,8 +4,10 @@ import android.location.Address;
 import android.location.Location;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.patloew.rxlocation.RxLocation;
 import com.sample.directions.directionssample.Model.LocationInfo;
+import com.sample.directions.directionssample.Presenter.ViewControllers.PickLocationView;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,6 +43,11 @@ public class PickLocationPresenter implements BasePresenter {
         return pickLocationPresenter;
     }
 
+    public static synchronized PickLocationPresenter newInstance(PickLocationView pickLocationView,RxLocation rxLocation){
+        pickLocationPresenter = new PickLocationPresenter(pickLocationView,rxLocation);
+        return pickLocationPresenter;
+    }
+
     private PickLocationPresenter(PickLocationView pickLocationView, RxLocation rxLocation){
         this.pickLocationView = pickLocationView;
         this.rxLocation = rxLocation;
@@ -69,9 +76,6 @@ public class PickLocationPresenter implements BasePresenter {
         }
     }
 
-    void startSearchForAddress(String address){
-
-    }
 
     @Override
     public void onStop() {
@@ -140,5 +144,31 @@ public class PickLocationPresenter implements BasePresenter {
 
     public boolean isSourceConfirmed() {
         return confirmedSource;
+    }
+
+
+    public void setLocationInfo(LocationInfo locationInfo) {
+        if(isSourceConfirmed()){
+            destination = locationInfo;
+            gotLocation();
+        }else {
+            source = locationInfo;
+            gotLocation();
+        }
+    }
+
+    public Location getLocation(LatLng latLng, String name){
+        Location location = new Location(name);
+        location.setLongitude(latLng.longitude);
+        location.setLatitude(latLng.latitude);
+        return location;
+    }
+
+    public LocationInfo getSource() {
+        return source;
+    }
+
+    public LocationInfo getDestination() {
+        return destination;
     }
 }
